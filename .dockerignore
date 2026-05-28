@@ -1,0 +1,7 @@
+dist
+node_modules
+npm-debug.log
+.env
+.firebase
+.vite-dev.log
+.vite-dev.err.log

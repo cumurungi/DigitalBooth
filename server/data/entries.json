@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1779271927816-718a0ba17ff428",
+    "kind": "photo",
+    "guestName": "Divine",
+    "title": "wedding photo",
+    "text": "wish you a happy familty",
+    "category": "Blessings",
+    "createdAt": "2026-05-20T10:12:07.816Z",
+    "mediaName": "solution1.png",
+    "mediaUrl": "/uploads/1779271927828-solution1.png",
+    "mediaType": "image"
+  },
+  {
+    "id": "1779271814489-9e2e472a4e6f48",
+    "kind": "blessing",
+    "guestName": "Charmante",
+    "title": "Blessing to my couple",
+    "text": "May God be the center of your family.",
+    "category": "Family",
+    "createdAt": "2026-05-20T10:10:14.489Z"
+  }
+]
