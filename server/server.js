@@ -62,10 +62,10 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT && process.env.FIREBASE_STORAGE_BUCKET)
   }
 }
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.use('/uploads', express.static(uploadDir));
+const server = express();
+server.use(cors());
+server.use(express.json());
+server.use('/uploads', express.static(uploadDir));
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -244,7 +244,7 @@ function requireCoupleAccess(req, res, next) {
   next();
 }
 
-app.post('/api/couple/login', (req, res) => {
+server.post('/api/couple/login', (req, res) => {
   if (!couplePasscode || !sessionSecret) {
     res.status(503).json({ error: 'Couple access is not configured' });
     return;
@@ -263,7 +263,7 @@ app.post('/api/couple/login', (req, res) => {
   res.json({ token: createSessionToken() });
 });
 
-app.get('/api/entries', requireCoupleAccess, async (req, res) => {
+server.get('/api/entries', requireCoupleAccess, async (req, res) => {
   try {
     const entries = await readEntries();
     res.json(entries);
@@ -272,7 +272,7 @@ app.get('/api/entries', requireCoupleAccess, async (req, res) => {
   }
 });
 
-app.post('/api/entries', upload.single('media'), async (req, res) => {
+server.post('/api/entries', upload.single('media'), async (req, res) => {
   try {
     const { id, kind, guestName, title, text, category, createdAt, mediaType } = req.body;
 
@@ -304,16 +304,9 @@ app.post('/api/entries', upload.single('media'), async (req, res) => {
 
 async function startServer() {
   await ensureStorage();
-  return app;
+  return server;
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  const server = await startServer();
-  server.listen(port, () => {
-    console.log(`Wedding booth backend listening on http://localhost:${port}`);
-  });
-} else {
-  await startServer();
-}
+export default server;
 
-export default await startServer();
+await startServer();
