@@ -302,8 +302,18 @@ app.post('/api/entries', upload.single('media'), async (req, res) => {
   }
 });
 
-ensureStorage().then(() => {
-  app.listen(port, () => {
+async function startServer() {
+  await ensureStorage();
+  return app;
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  const server = await startServer();
+  server.listen(port, () => {
     console.log(`Wedding booth backend listening on http://localhost:${port}`);
   });
-});
+} else {
+  await startServer();
+}
+
+export default await startServer();
